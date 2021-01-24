@@ -1,4 +1,4 @@
-FROM node:lts-alpine as builder
+FROM  balenalib/raspberrypi4-64-alpine-node:14-latest as builder
 ARG TAG=master
 RUN apk add --no-cache git python build-base linux-headers udev sudo
 WORKDIR /work
@@ -6,7 +6,7 @@ RUN npx degit tagyoureit/poolcontroller-manager#${TAG}
 RUN npm ci
 RUN npm run build
 
-FROM node:lts-alpine
+FROM balenalib/raspberrypi4-64-alpine-node:14-latest 
 WORKDIR /usr/local/poolcontroller-manager
 COPY --from=builder /work/node_modules .
 # Consider moving these files to dist folder
